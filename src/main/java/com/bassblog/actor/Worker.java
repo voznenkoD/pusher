@@ -1,12 +1,12 @@
-package com.bassblog.actors;
+package com.bassblog.actor;
 
 import akka.actor.UntypedActor;
 import com.bassblog.domain.BlogPost;
+import com.bassblog.domain.InitMessage;
 import com.bassblog.service.ApplePushSendService;
 import com.bassblog.service.BloggerRetrieveService;
 import com.bassblog.service.DBStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -23,21 +23,18 @@ public class Worker extends UntypedActor{
     @Autowired
     ApplePushSendService applePushSendService;
 
-
     @Override
     public void onReceive(Object message) throws Exception {
-
         if(message instanceof BlogPost){
-            applePushSendService.sendPushNotification((BlogPost) message);
+            applePushSendService.sendPushNotif((BlogPost) message);
         } else if (message instanceof Date) {
             dbStoreService.storeLastNotificationTime((Date) message);
-        } else if (message instanceof ){
+        } else if (message instanceof InitMessage){
             Date lastNotificationTime = dbStoreService.getLastNotificationTime();
             List<BlogPost> posts = bloggerRetrieveService.getBlogPostsSince(lastNotificationTime);
             for (BlogPost post : posts) {
                 getSender().tell(post , getSelf());
             }
         }
-
     }
 }
