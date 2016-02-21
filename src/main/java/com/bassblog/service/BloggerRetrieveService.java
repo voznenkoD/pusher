@@ -43,7 +43,6 @@ public class BloggerRetrieveService {
 
             if (resultFeed.getEntries().size() > 0) {
                 Entry entry = resultFeed.getEntries().get(0);
-
                 String blogId = entry.getId().split("blog-")[1];
             } else {
                 throw new IOException("User has no blogs!");

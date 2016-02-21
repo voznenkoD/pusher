@@ -7,6 +7,7 @@ import com.bassblog.service.ApplePushSendService;
 import com.bassblog.service.BloggerRetrieveService;
 import com.bassblog.service.DBStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;

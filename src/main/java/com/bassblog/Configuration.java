@@ -6,6 +6,7 @@ import com.relayrides.pushy.apns.util.SimpleApnsPushNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class Configuration {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     /**
      * Actor system singleton for this application.
      */
@@ -34,7 +38,6 @@ public class Configuration {
 
     @Bean
     public ApnsClient<SimpleApnsPushNotification> apnsClient () throws IOException {
-        return new ApnsClient<>(new File("/path/to/certificate.p12"), "p12-file-password");
-
+        return new ApnsClient<>(resourceLoader.getResource("classpath:cert.p12").getFile(), "p12-file-password");
     }
 }

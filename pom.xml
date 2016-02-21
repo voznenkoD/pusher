@@ -80,7 +80,6 @@
 			<version>1.47.1</version>
 		</dependency>
 
-
 	</dependencies>
 	
 	<build>

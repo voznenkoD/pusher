@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 
 import com.bassblog.domain.InitMessage;
+import com.bassblog.service.SchedulerService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -19,12 +20,10 @@ public class PusherApplication {
 		ctx.refresh();
 
 		ActorSystem system = ctx.getBean(ActorSystem.class);
-		ActorRef counter = system.actorOf(
+		ActorRef worker = system.actorOf(
 				SpringExtProvider.get(system).props("Worker"), "worker");
 
-        //TODO schedule with quartz
-        while(true) {
-            counter.tell(new InitMessage(), null);
-        }
+		SchedulerService scheduler = ctx.getBean(SchedulerService.class);
+		scheduler.schedule(worker);
 	}
 }
