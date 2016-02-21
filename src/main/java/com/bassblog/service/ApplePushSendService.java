@@ -9,18 +9,22 @@ import com.relayrides.pushy.apns.util.SimpleApnsPushNotification;
 import com.relayrides.pushy.apns.util.TokenUtil;
 import io.netty.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by dmytro on 19/02/16.
  */
+@Service
 public class ApplePushSendService {
     @Autowired
     ApnsClient<SimpleApnsPushNotification> apnsClient;
     SimpleApnsPushNotification pushNotification;
-     ApnsPayloadBuilder payloadBuilder;
+    ApnsPayloadBuilder payloadBuilder;
 
+    @PostConstruct
     public void init() {
         final Future<Void> connectFuture = apnsClient.connect(ApnsClient.DEVELOPMENT_APNS_HOST);
         try {

@@ -24,45 +24,63 @@
 	</properties>
 
 	<dependencies>
+
+		<!--Spring framework dependencies-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.typesafe.akka</groupId>
-			<artifactId>akka-actor_2.11</artifactId>
-			<version>2.4.2</version>
-		</dependency>
-
-        <dependency>
-            <groupId>com.relayrides</groupId>
-            <artifactId>pushy</artifactId>
-            <version>0.5.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-osgi_2.10</artifactId>
-            <version>2.3.14</version>
-        </dependency>
-
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-			<version>4.1.0.CR2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.0.9.RELEASE</version>
+		</dependency>
+
+
+		<!--Akka dependencies -->
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-actor_2.11</artifactId>
+			<version>2.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-osgi_2.10</artifactId>
+			<version>2.3.14</version>
+		</dependency>
+
+		<!--Pushy dependencies-->
+        <dependency>
+            <groupId>com.relayrides</groupId>
+            <artifactId>pushy</artifactId>
+            <version>0.5.2</version>
+        </dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.0.CR2</version>
+		</dependency>
+
+		<!--DB connector dependencies-->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!--Google bloger API dependencies-->
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>core</artifactId>
+			<version>1.47.1</version>
+		</dependency>
+
+
 	</dependencies>
 	
 	<build>

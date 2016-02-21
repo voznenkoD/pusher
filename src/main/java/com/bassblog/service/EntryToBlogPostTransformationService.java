@@ -3,8 +3,9 @@ package com.bassblog.service;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by dmytro on 19/02/16.
+ * Created by eljetto on 2/21/16.
  */
+
 @Service
-public class SchedulerService {
+public class EntryToBlogPostTransformationService {
 }

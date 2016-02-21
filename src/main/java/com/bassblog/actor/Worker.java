@@ -32,6 +32,7 @@ public class Worker extends UntypedActor{
         } else if (message instanceof InitMessage){
             Date lastNotificationTime = dbStoreService.getLastNotificationTime();
             List<BlogPost> posts = bloggerRetrieveService.getBlogPostsSince(lastNotificationTime);
+            //TODO check if list of posts isn't empty
             for (BlogPost post : posts) {
                 getSender().tell(post , getSelf());
             }
