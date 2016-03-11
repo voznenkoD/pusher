@@ -24,28 +24,16 @@ public class ApplePushSendService {
     SimpleApnsPushNotification pushNotification;
     ApnsPayloadBuilder payloadBuilder;
 
-    @PostConstruct
-    public void init() {
+    public void sendPushNotif(BlogPost blogPost) {
+
         final Future<Void> connectFuture = apnsClient.connect(ApnsClient.DEVELOPMENT_APNS_HOST);
         try {
             connectFuture.await();
         } catch (InterruptedException e) {
             //TODO research and do proper handling
         }
-    }
 
-    public void shutdown() {
-        final Future<Void> disconnectFuture = apnsClient.disconnect();
-        try {
-            disconnectFuture.await();
-        } catch (InterruptedException e) {
-            //TODO proper handler
-        }
-    }
-
-
-    public void sendPushNotif(BlogPost blogPost) {
-        ApnsPayloadBuilder  payloadBuilder = new ApnsPayloadBuilder();
+        ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
         //TODO proper payloadBuilder
         payloadBuilder.setAlertBody(blogPost.toString());
         final String payload = payloadBuilder.buildWithDefaultMaximumLength();
@@ -81,7 +69,14 @@ public class ApplePushSendService {
             }
         } catch (InterruptedException e) {
             //in case of interuption of send notification
+        } finally {
+            final Future<Void> disconnectFuture = apnsClient.disconnect();
+            try {
+                disconnectFuture.await();
+            } catch (InterruptedException e) {
+                //TODO proper handler
+            }
+
         }
     }
-
 }

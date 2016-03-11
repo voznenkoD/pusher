@@ -34,7 +34,7 @@ public class BloggerRetrieveService {
 
     @PostConstruct
     public void init() {
-        bloggerService = new BloggerService("exampleCo-exampleApp-1");
+        bloggerService = new BloggerService("pusherBlogPost");
         try {
             bloggerService.setUserCredentials(USERNAME, PASSWORD);
 

@@ -14,16 +14,14 @@ import javax.annotation.Resource;
 @Service
 public class SchedulerService {
 
-    @Resource
-    ThreadPoolTaskScheduler threadPoolTaskScheduler;
-
-    @Value("${service.pollTime}")
-    Long servicePollTime;
+    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
     /**
      * Schedule the run of the worker
      */
     public void schedule(ActorRef worker) {
-        threadPoolTaskScheduler.scheduleWithFixedDelay((Runnable) () -> worker.tell(new InitMessage(), null), servicePollTime);
+        threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+        threadPoolTaskScheduler.initialize();
+        threadPoolTaskScheduler.scheduleWithFixedDelay((Runnable) () -> worker.tell(new InitMessage(), null), 10000);
     }
 }

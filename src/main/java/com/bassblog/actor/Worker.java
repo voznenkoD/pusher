@@ -7,7 +7,8 @@ import com.bassblog.service.ApplePushSendService;
 import com.bassblog.service.BloggerRetrieveService;
 import com.bassblog.service.DBStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import javax.inject.Named;
+import org.springframework.context.annotation.Scope;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 /**
  * Created by dmytro on 19/02/16.
  */
+@Named("Worker")
+@Scope("prototype")
 public class Worker extends UntypedActor{
 
     @Autowired

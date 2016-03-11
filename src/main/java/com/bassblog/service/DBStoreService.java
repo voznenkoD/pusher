@@ -12,20 +12,15 @@ import java.util.Date;
 @Service
 public class DBStoreService {
 
-    private final JdbcTemplate jdbcTemplate;
-
     @Autowired
-    public DBStoreService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
+    private JdbcTemplate jdbcTemplate;
 
     public void storeLastNotificationTime(Date date) {
         jdbcTemplate.update("INSERT INTO lastModified (lastModified) VALUES (" + date.getTime() + ");");
     }
 
     public Date getLastNotificationTime() {
-        return new Date(jdbcTemplate.queryForLong("SELECT lastModified from lastModified;"));
+        return new Date(jdbcTemplate.queryForObject("SELECT lastModified from lastModified;", Long.class));
     }
 }
 
