@@ -1,19 +1,18 @@
 package com.bassblog.service;
 
-import com.bassblog.domain.BlogPost;
-import com.google.gdata.client.blogger.BloggerService;
-import com.google.gdata.data.DateTime;
-import com.google.gdata.data.Entry;
-import com.google.gdata.data.Feed;
-import com.google.gdata.client.Query;
-import com.google.gdata.util.ServiceException;
+import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
+import com.google.api.services.blogger.Blogger;
+import com.google.api.services.blogger.BloggerScopes;
+import com.google.api.services.blogger.model.Blog;
+import com.google.api.services.blogger.model.Post;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.URL;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,54 +21,22 @@ import java.util.List;
  */
 @Service
 public class BloggerRetrieveService {
-    private String feedUri;
-    private BloggerService bloggerService;
-    private static final String METAFEED_URL = "http://www.blogger.com/feeds/default/blogs";
+    public Blogger blogger = null;
+    public Blog blog;
+    static final String API_KEY = "";
+    private static final String blogURL = "";
 
-    private static final String FEED_URI_BASE = "http://www.blogger.com/feeds";
-    private static final String POSTS_FEED_URI_SUFFIX = "/posts/default";
-    private static final String BLOG_ID = "megaBlogId";
-    private static final String USERNAME = "megaBlogId";
-    private static final String PASSWORD = "megaBlogId";
 
     @PostConstruct
     public void init() {
-        bloggerService = new BloggerService("pusherBlogPost");
-        try {
-            bloggerService.setUserCredentials(USERNAME, PASSWORD);
-
-            final URL feedUrl = new URL(METAFEED_URL);
-            Feed resultFeed = bloggerService.getFeed(feedUrl, Feed.class);
-
-            if (resultFeed.getEntries().size() > 0) {
-                Entry entry = resultFeed.getEntries().get(0);
-                String blogId = entry.getId().split("blog-")[1];
-            } else {
-                throw new IOException("User has no blogs!");
-            }
-            feedUri = FEED_URI_BASE + "/" + BLOG_ID;
-        } catch (ServiceException | IOException se) {
-            se.printStackTrace();
-        }
+            AppIdentityCredential credential = new AppIdentityCredential(Arrays.asList(BloggerScopes.BLOGGER));
+            this.blogger = new Blogger.Builder(new UrlFetchTransport(), new JacksonFactory(), credential).setApplicationName("pushNotifier").build();
     }
 
-    public List<BlogPost> getBlogPostsSince(Date lastNotificationTime) {
-        List<BlogPost> blogPosts = new LinkedList<>();
-        // Create query and submit a request
-        URL feedUrl = null;
-        try {
-            feedUrl = new URL(feedUri + POSTS_FEED_URI_SUFFIX);
-
-            Query myQuery = new Query(feedUrl);
-            myQuery.setUpdatedMin(new DateTime(lastNotificationTime.getTime()));
-            Feed resultFeed = bloggerService.query(myQuery, Feed.class);
-            for (int i = 0; i < resultFeed.getEntries().size(); i++) {
-                Entry entry = resultFeed.getEntries().get(i);
-
-            }
-        } catch (ServiceException | IOException e) {
-            e.printStackTrace();
-        }
-        return blogPosts;
+    public List<Post> getBlogPostsSince(Date lastNotificationTime) throws IOException {
+        Blogger.Blogs.GetByUrl request = blogger.blogs().getByUrl(blogURL);
+        this.blog = request.setKey(API_KEY).execute();
+        List<Post> posts = blog.getPosts().getItems();
+        return posts;
     }
 }

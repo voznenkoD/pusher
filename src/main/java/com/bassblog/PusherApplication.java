@@ -3,19 +3,15 @@ package com.bassblog;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 
-import com.bassblog.domain.InitMessage;
 import com.bassblog.service.SchedulerService;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.PropertySource;
 
-import java.util.Arrays;
 
 import static com.bassblog.SpringExtension.SpringExtProvider;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 public class PusherApplication {
 
 	public static void main(String[] args) {

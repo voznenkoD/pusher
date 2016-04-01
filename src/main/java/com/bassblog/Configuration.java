@@ -6,7 +6,6 @@ import com.relayrides.pushy.apns.util.SimpleApnsPushNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
@@ -18,6 +17,7 @@ import static com.bassblog.SpringExtension.SpringExtProvider;
  */
 @org.springframework.context.annotation.Configuration
 @ComponentScan("com.bassblog")
+@PropertySource("classpath:application.properties")
 public class Configuration {
     // the application context is needed to initialize the Akka Spring Extension
     @Autowired

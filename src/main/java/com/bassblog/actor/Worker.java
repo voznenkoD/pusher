@@ -6,6 +6,7 @@ import com.bassblog.domain.InitMessage;
 import com.bassblog.service.ApplePushSendService;
 import com.bassblog.service.BloggerRetrieveService;
 import com.bassblog.service.DBStoreService;
+import com.google.api.services.blogger.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
@@ -34,10 +35,10 @@ public class Worker extends UntypedActor{
         } else if (message instanceof Date) {
             dbStoreService.storeLastNotificationTime((Date) message);
         } else if (message instanceof InitMessage){
-            Date lastNotificationTime = dbStoreService.getLastNotificationTime();
-            List<BlogPost> posts = bloggerRetrieveService.getBlogPostsSince(lastNotificationTime);
+            //Date lastNotificationTime = dbStoreService.getLastNotificationTime();
+            List<Post> posts = bloggerRetrieveService.getBlogPostsSince(new Date());
             //TODO check if list of posts isn't empty
-            for (BlogPost post : posts) {
+            for (Post post : posts) {
                 getSender().tell(post , getSelf());
             }
         }
