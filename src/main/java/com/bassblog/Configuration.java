@@ -38,6 +38,6 @@ public class Configuration {
 
     @Bean
     public ApnsClient<SimpleApnsPushNotification> apnsClient () throws IOException {
-        return new ApnsClient<>(resourceLoader.getResource("classpath:Certificates.p12").getFile(), "");
+        return new ApnsClient<>(resourceLoader.getResource("classpath:Certificates.p12").getFile(), Constants.PUSH_PASS);
     }
 }

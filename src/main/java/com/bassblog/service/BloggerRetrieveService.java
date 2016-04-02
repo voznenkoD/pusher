@@ -1,17 +1,21 @@
 package com.bassblog.service;
 
-import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
-import com.google.api.services.blogger.Blogger;
-import com.google.api.services.blogger.BloggerScopes;
-import com.google.api.services.blogger.model.Blog;
-import com.google.api.services.blogger.model.Post;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.bassblog.Constants;
+import com.bassblog.domain.PushItem;
+import com.bassblog.domain.Result;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,22 +25,39 @@ import java.util.List;
  */
 @Service
 public class BloggerRetrieveService {
-    public Blogger blogger = null;
-    public Blog blog;
-    static final String API_KEY = "";
-    private static final String blogURL = "";
 
 
-    @PostConstruct
-    public void init() {
-            AppIdentityCredential credential = new AppIdentityCredential(Arrays.asList(BloggerScopes.BLOGGER));
-            this.blogger = new Blogger.Builder(new UrlFetchTransport(), new JacksonFactory(), credential).setApplicationName("pushNotifier").build();
+    public List<PushItem> getBlogPostsSince(Date lastNotificationTime) throws IOException {
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet(buildUrlForPushItemsSince(lastNotificationTime));
+        HttpResponse response = client.execute(request);
+        Result result = new ObjectMapper().readValue(getStringResponseBody(response), Result.class);
+        return result.getItems();
     }
 
-    public List<Post> getBlogPostsSince(Date lastNotificationTime) throws IOException {
-        Blogger.Blogs.GetByUrl request = blogger.blogs().getByUrl(blogURL);
-        this.blog = request.setKey(API_KEY).execute();
-        List<Post> posts = blog.getPosts().getItems();
-        return posts;
+    private String getStringResponseBody(HttpResponse response) throws IOException {
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+        StringBuilder stringBody = new StringBuilder();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            stringBody.append(line);
+        }
+        //TODO handle empty
+        return stringBody.toString();
+    }
+
+    private String buildUrlForPushItemsSince(Date date){
+        return Constants.BASE_URL + Constants.BLOG_ID + "/posts?fetchBodies=true&fetchImages=false&startDate=" +
+                transformDateForUrl(date) + "&fields=items(selfLink%2Ctitle)&key=" + Constants.API_KEY;
+    }
+
+    private String transformDateForUrl(Date date){
+        try {
+            return URLEncoder.encode(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(date), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            //TODO logging of behaviour
+            return "2016-03-29T12%3A30%3A00%2B02%3A00";
+        }
     }
 }

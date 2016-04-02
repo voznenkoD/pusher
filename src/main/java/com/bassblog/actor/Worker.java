@@ -1,12 +1,11 @@
 package com.bassblog.actor;
 
 import akka.actor.UntypedActor;
-import com.bassblog.domain.BlogPost;
 import com.bassblog.domain.InitMessage;
+import com.bassblog.domain.PushItem;
 import com.bassblog.service.ApplePushSendService;
 import com.bassblog.service.BloggerRetrieveService;
 import com.bassblog.service.DBStoreService;
-import com.google.api.services.blogger.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
@@ -30,15 +29,15 @@ public class Worker extends UntypedActor{
 
     @Override
     public void onReceive(Object message) throws Exception {
-        if(message instanceof BlogPost){
-            applePushSendService.sendPushNotif((BlogPost) message);
+        if(message instanceof PushItem){
+            applePushSendService.sendPushNotif((PushItem) message);
         } else if (message instanceof Date) {
             dbStoreService.storeLastNotificationTime((Date) message);
         } else if (message instanceof InitMessage){
-            //Date lastNotificationTime = dbStoreService.getLastNotificationTime();
-            List<Post> posts = bloggerRetrieveService.getBlogPostsSince(new Date());
+            Date lastNotificationTime = dbStoreService.getLastNotificationTime();
+            List<PushItem> posts = bloggerRetrieveService.getBlogPostsSince(lastNotificationTime);
             //TODO check if list of posts isn't empty
-            for (Post post : posts) {
+            for (PushItem post : posts) {
                 getSender().tell(post , getSelf());
             }
         }

@@ -1,6 +1,6 @@
 package com.bassblog.service;
 
-import com.bassblog.domain.BlogPost;
+import com.bassblog.domain.PushItem;
 import com.relayrides.pushy.apns.ApnsClient;
 import com.relayrides.pushy.apns.ClientNotConnectedException;
 import com.relayrides.pushy.apns.PushNotificationResponse;
@@ -11,7 +11,6 @@ import io.netty.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -24,7 +23,7 @@ public class ApplePushSendService {
     SimpleApnsPushNotification pushNotification;
     ApnsPayloadBuilder payloadBuilder;
 
-    public void sendPushNotif(BlogPost blogPost) {
+    public void sendPushNotif(PushItem pushItem) {
 
         final Future<Void> connectFuture = apnsClient.connect(ApnsClient.DEVELOPMENT_APNS_HOST);
         try {
@@ -35,7 +34,7 @@ public class ApplePushSendService {
 
         ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
         //TODO proper payloadBuilder
-        payloadBuilder.setAlertBody(blogPost.toString());
+        payloadBuilder.setAlertBody(pushItem.toString());
         final String payload = payloadBuilder.buildWithDefaultMaximumLength();
         final String token = TokenUtil.sanitizeTokenString("<efc7492 bdbd8209>");
         final SimpleApnsPushNotification pushNotification = new SimpleApnsPushNotification(token, "com.example.myApp", payload);
