@@ -1,2 +1,3 @@
-create database pusherDB;
-create table lastmodified(lastmodified long);
+CREATE database pusherDB;
+CREATE TABLE lastmodified(lastmodified long);
+INSERT INTO lastmodified (lastmodified) VALUES (0);

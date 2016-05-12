@@ -38,7 +38,7 @@ public class Worker extends UntypedActor{
             List<PushItem> posts = bloggerRetrieveService.getBlogPostsSince(lastNotificationTime);
             //TODO check if list of posts isn't empty
             for (PushItem post : posts) {
-                getSender().tell(post , getSelf());
+                getSelf().tell(post , getSelf());
             }
         }
     }

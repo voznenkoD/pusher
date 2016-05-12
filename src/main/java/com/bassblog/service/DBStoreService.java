@@ -20,7 +20,8 @@ public class DBStoreService {
     }
 
     public Date getLastNotificationTime() {
-        return new Date(jdbcTemplate.queryForObject("SELECT lastModified from lastModified;", Long.class));
+        long timestamp = jdbcTemplate.queryForObject("SELECT lastModified from lastModified;", Long.class);
+        return new Date(timestamp);
     }
 }
 

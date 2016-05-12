@@ -22,6 +22,6 @@ public class SchedulerService {
     public void schedule(ActorRef worker) {
         threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.initialize();
-        threadPoolTaskScheduler.scheduleWithFixedDelay((Runnable) () -> worker.tell(new InitMessage(), null), 10000);
+        threadPoolTaskScheduler.scheduleWithFixedDelay((Runnable) () -> worker.tell(new InitMessage(), null), 100000);
     }
 }

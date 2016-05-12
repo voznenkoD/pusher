@@ -6,6 +6,6 @@ package com.bassblog;
 public class Constants {
     public static final String API_KEY = "";
     public static final String BLOG_ID = "";
-    public static final String BASE_URL = "";
     public static final String PUSH_PASS = "";
+    public static final String BASE_URL = "https://www.googleapis.com/blogger/v3/blogs/";
 }
