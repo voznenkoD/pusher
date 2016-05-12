@@ -30,7 +30,8 @@ public class Worker extends UntypedActor{
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof PushItem){
-            applePushSendService.sendPushNotif((PushItem) message);
+            //applePushSendService.sendPushNotif((PushItem) message);
+            System.out.println("BLABLABLA!!!!");
         } else if (message instanceof Date) {
             dbStoreService.storeLastNotificationTime((Date) message);
         } else if (message instanceof InitMessage){
