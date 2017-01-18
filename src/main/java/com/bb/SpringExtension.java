@@ -1,4 +1,4 @@
-package com.bassblog;
+package com.bb;
 
 import akka.actor.AbstractExtensionId;
 import akka.actor.ExtendedActorSystem;
@@ -7,6 +7,8 @@ import akka.actor.Props;
 import org.springframework.context.ApplicationContext;
 
 /**
+ * /**
+ * @author dmytrov
  * An Akka Extension to provide access to Spring managed Actor Beans.
  */
 public class SpringExtension extends

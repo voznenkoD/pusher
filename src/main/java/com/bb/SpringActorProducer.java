@@ -1,10 +1,11 @@
-package com.bassblog;
+package com.bb;
 
 import akka.actor.Actor;
 import akka.actor.IndirectActorProducer;
 import org.springframework.context.ApplicationContext;
 
 /**
+ * @author dmytrov
  * An actor producer that lets Spring create the Actor instances.
  */
 public class SpringActorProducer implements IndirectActorProducer {

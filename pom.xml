@@ -30,10 +30,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -53,26 +49,6 @@
 			<version>2.3.14</version>
 		</dependency>
 
-		<!--Pushy dependencies-->
-        <dependency>
-            <groupId>com.relayrides</groupId>
-            <artifactId>pushy</artifactId>
-            <version>0.5.2</version>
-        </dependency>
-
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-codec-http2</artifactId>
-			<version>4.1.0.CR3</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-tcnative</artifactId>
-			<version>1.1.33.Fork12</version>
-			<classifier>osx-x86_64</classifier>
-		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty.alpn</groupId>
@@ -81,40 +57,15 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!--DB connector dependencies-->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.38</version>
-		</dependency>
-
-		<!--Google bloger API dependencies-->
-		<dependency>
-			<groupId>com.google.apis</groupId>
-			<artifactId>google-api-services-blogger</artifactId>
-			<version>v3-rev50-1.21.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client-appengine</artifactId>
-			<version>1.21.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.9.34</version>
-		</dependency>
 		<dependency>
 			<groupId>org.glassfish.hk2.external</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>2.4.0-b31</version>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.5.4</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 	</dependencies>
 	
 	<build>
