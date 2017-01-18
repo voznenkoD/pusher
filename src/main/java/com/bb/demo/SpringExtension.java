@@ -1,4 +1,4 @@
-package com.bb;
+package com.bb.demo;
 
 import akka.actor.AbstractExtensionId;
 import akka.actor.ExtendedActorSystem;

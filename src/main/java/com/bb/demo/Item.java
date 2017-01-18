@@ -1,4 +1,4 @@
-package com.bb.domain;
+package com.bb.demo;
 
 /**
  * @author dmytrov
@@ -8,6 +8,11 @@ public class Item {
     private String title;
 
     public Item() {
+    }
+
+    public Item(String link, String title) {
+        this.link = link;
+        this.title = title;
     }
 
     public String getLink() {
@@ -24,5 +29,14 @@ public class Item {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "link='" + link + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

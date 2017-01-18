@@ -1,4 +1,4 @@
-package com.bb.domain;
+package com.bb.demo;
 
 /**
  * @author dmytrov

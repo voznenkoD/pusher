@@ -1,4 +1,4 @@
-package com.bb;
+package com.bb.demo;
 
 import akka.actor.Actor;
 import akka.actor.IndirectActorProducer;
